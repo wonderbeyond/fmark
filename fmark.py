@@ -40,8 +40,9 @@ args = parser.parse_args()
 mark_db = dbm.open(args.dbfile, 'c')
 
 if 'add' in sys.argv:
-    print 'mark `%s` as %s' % (args.filename, args.mark)
-    mark_db[args.mark] = args.filename
+    filename = os.path.realpath(args.filename)
+    print 'mark `%s` as %s' % (filename, args.mark)
+    mark_db[args.mark] = filename
 elif 'get' in sys.argv:
     try:
         filename = mark_db[args.mark]
