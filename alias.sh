@@ -5,3 +5,4 @@ alias fmls="fmark ls"
 alias fmll="fmark ls -l"
 alias fmdel="fmark del"
 alias fmedit="fmark get -e"
+fmcd(){ cd "`fmark get $1`"; }
