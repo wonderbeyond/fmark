@@ -63,6 +63,6 @@ elif 'del' in sys.argv:
 elif 'ls' in sys.argv:
     if args.long:
         for key in mark_db.keys():
-            print '%s -> %s' % (key, mark_db[key])
+            print '%s\t->\t%s' % (key.rjust(20), mark_db[key])
     else:
         for m in mark_db.keys(): print m
