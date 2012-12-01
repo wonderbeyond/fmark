@@ -5,4 +5,14 @@ alias fmls="fmark ls"
 alias fmll="fmark ls -l"
 alias fmd="fmark del"
 alias fme="fmark get -e"
-fmcd(){ cd "`fmark get $1`"; }
+
+fmcd(){
+    local mark="$1";
+    local dir="`fmark get $mark`";
+
+    if [ -d "$dir" ]; then
+        cd "$dir";
+    else
+        echo "not a dir for $mark";
+    fi
+}
