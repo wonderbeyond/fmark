@@ -17,8 +17,8 @@ subcmds = parser.add_subparsers(help='sub-command help')
 
 # command add
 cmd_add = subcmds.add_parser('add', help='add new file mark')
-cmd_add.add_argument('mark', action='store')
 cmd_add.add_argument('filename', action='store')
+cmd_add.add_argument('mark', action='store')
 
 # command get
 cmd_get = subcmds.add_parser('get', help='get the file by mark')

@@ -1,0 +1,40 @@
+# bash completion for fmark
+
+have fmark &&
+_fmark()
+{
+    local cur prev
+    #_init_completion || return
+    COMPREPLY=()
+
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    case $prev in
+        get|del)
+            COMPREPLY=( $( compgen -W "`fmark ls`" -- "$cur" ) )
+            return 0
+            ;;
+        add)
+            _filedir
+            return 0
+            ;;
+    esac
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '--dbfile --help' -- "$cur" ) )
+    else
+        COMPREPLY=( $( compgen -W 'add get del ls' -- "$cur" ) )
+    fi
+} && complete -F _fmark fmark
+
+_using_marks(){
+    local cur
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $( compgen -W "`fmark ls`" -- "$cur" ) )
+    return 0
+} &&
+complete -F _using_marks fmg &&
+complete -F _using_marks fme &&
+complete -F _using_marks fmd &&
+complete -F _using_marks fmcd
