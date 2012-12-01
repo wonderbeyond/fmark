@@ -2,7 +2,8 @@
 # coding=utf-8
 
 import os, sys, argparse
-import gdbm as dbm
+import anydbm as dbm
+from contextlib import closing
 
 DB_FILE = os.path.expanduser('~/.fmarks')
 EDITOR = 'vim'
@@ -37,32 +38,32 @@ cmd_ls.add_argument('-l', '--long', action='store_true')
 args = parser.parse_args()
 
 # open mark database
-mark_db = dbm.open(args.dbfile, 'c')
+with closing(dbm.open(args.dbfile, 'c')) as mark_db:
 
-if 'add' in sys.argv:
-    filename = os.path.realpath(args.filename)
-    print 'mark `%s` as %s' % (filename, args.mark)
-    mark_db[args.mark] = filename
-elif 'get' in sys.argv:
-    try:
-        filename = mark_db[args.mark]
-        #print '%s hit %s' % (args.mark, filename)
-        if not args.edit:
-            print filename
+    if 'add' in sys.argv:
+        filename = os.path.realpath(args.filename)
+        print 'mark `%s` as %s' % (filename, args.mark)
+        mark_db[args.mark] = filename
+    elif 'get' in sys.argv:
+        try:
+            filename = mark_db[args.mark]
+            #print '%s hit %s' % (args.mark, filename)
+            if not args.edit:
+                print filename
+            else:
+                os.system('%s %s' % (args.editor, filename))
+        except KeyError:
+            print 'no `%s`' % args.mark
+            pass
+    elif 'del' in sys.argv:
+        print 'del mark: %s' % args.mark
+        try:
+            del mark_db[args.mark]
+        except:
+            pass
+    elif 'ls' in sys.argv:
+        if args.long:
+            for key in mark_db.keys():
+                print '%s\t->\t%s' % (key.rjust(20), mark_db[key])
         else:
-            os.system('%s %s' % (args.editor, filename))
-    except KeyError:
-        print 'no `%s`' % args.mark
-        pass
-elif 'del' in sys.argv:
-    print 'del mark: %s' % args.mark
-    try:
-        del mark_db[args.mark]
-    except:
-        pass
-elif 'ls' in sys.argv:
-    if args.long:
-        for key in mark_db.keys():
-            print '%s\t->\t%s' % (key.rjust(20), mark_db[key])
-    else:
-        for m in mark_db.keys(): print m
+            for m in mark_db.keys(): print m
