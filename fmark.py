@@ -2,7 +2,7 @@
 # coding=utf-8
 
 import os, sys, argparse
-import anydbm as dbm
+import shelve as db
 from contextlib import closing
 
 DB_FILE = os.path.expanduser('~/.fmarks')
@@ -38,7 +38,7 @@ cmd_ls.add_argument('-l', '--long', action='store_true')
 args = parser.parse_args()
 
 # open mark database
-with closing(dbm.open(args.dbfile, 'c')) as mark_db:
+with closing(db.open(args.dbfile, 'c')) as mark_db:
 
     if 'add' in sys.argv:
         filename = os.path.realpath(args.filename)
