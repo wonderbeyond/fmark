@@ -10,6 +10,8 @@ fmcd(){
     local mark="$1";
     local dir="`fmark get $mark`";
 
+    [ ! -d "$dir" ] && dir=`dirname "$dir"`
+
     if [ -d "$dir" ]; then
         cd "$dir";
     else

@@ -34,7 +34,8 @@ _using_marks(){
     COMPREPLY=( $( compgen -W "`fmark ls`" -- "$cur" ) )
     return 0
 } &&
-complete -F _using_marks fmg &&
-complete -F _using_marks fme &&
-complete -F _using_marks fmd &&
-complete -F _using_marks fmcd
+complete -F _using_marks \
+fmg fmget \
+fme fmedit \
+fmd fmdel \
+fmcd
