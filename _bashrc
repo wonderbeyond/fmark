@@ -18,3 +18,13 @@ fmcd(){
         echo "not a dir for $mark";
     fi
 }
+
+fmrename(){
+    local mark nmark target
+    mark="$1"
+    nmark="$2"
+    target=`fmark get "$mark"`
+
+    fmark del "$mark"
+    fmark add "$target" "$nmark"
+}

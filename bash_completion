@@ -30,12 +30,16 @@ _fmark()
 
 _using_marks(){
     local cur
+    COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
-    COMPREPLY=( $( compgen -W "`fmark ls`" -- "$cur" ) )
+    if [[ "$COMP_CWORD" == 1 ]]; then
+        COMPREPLY=( $( compgen -W "`fmark ls`" -- "$cur" ) )
+    fi
     return 0
 } &&
 complete -F _using_marks \
 fmg fmget \
 fme fmedit \
 fmd fmdel \
-fmcd
+fmcd \
+fmrename
