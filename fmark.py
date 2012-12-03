@@ -64,6 +64,6 @@ with closing(db.open(args.dbfile, 'c')) as mark_db:
     elif 'ls' in sys.argv:
         if args.long:
             for key in mark_db.keys():
-                print '%s\t->\t%s' % (key.rjust(20), mark_db[key])
+                print '%s\t->\t%s' % (key.ljust(20), mark_db[key])
         else:
             for m in mark_db.keys(): print m
